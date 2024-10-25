@@ -270,7 +270,7 @@ def func4(x):
 
 def main():
     
-    set_delta(0.5)
+    set_delta(0.01)
 
     x = np.linspace(-3,3,2000) # self.INF=3 in LTI
     input_signal = ContinuousSignal(func1)
@@ -284,6 +284,8 @@ def main():
     co_efficients,unit_impulses = LTI_signal.linear_combination_of_impulses(input_signal,delta)
       
     LTI_signal.output_approx(input_signal,delta)
+
+
     
 
 

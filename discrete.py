@@ -154,9 +154,7 @@ class  LTI_Discrete:
           subplots = []
           for i,val in enumerate(input_signal.signal):
                copy = self.h
-               
                k = i-input_signal.INF
-               
                shifted = copy.shift_signal(k)
                #print(f"shifted :{shifted}")
                subplot = (shifted)*val
