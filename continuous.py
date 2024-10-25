@@ -270,7 +270,7 @@ def func4(x):
 
 def main():
     
-    set_delta(0.01)
+    set_delta(0.5)
 
     x = np.linspace(-3,3,2000) # self.INF=3 in LTI
     input_signal = ContinuousSignal(func1)

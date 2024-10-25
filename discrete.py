@@ -4,25 +4,7 @@ from typing import Tuple
 import math
 
 
-def plot(signal, INF, saveTo=None):
-    # Define y_range based on the signal's minimum and maximum values
-    y_min, y_max = np.min(signal.signal), np.max(signal.signal)
-    y_range = (y_min, y_max + 1)  # Adjust as needed to ensure full visibility
-    
-    plt.figure(figsize=(6, 6))
-    plt.xticks(np.arange(-INF, INF + 1, 1))
-    
-    # Set y range based on the calculated y_range
-    plt.ylim(*y_range)
-    
-    # Plot the signal using stem
-    plt.stem(np.arange(-INF, INF + 1, 1), signal.signal)
-    plt.grid(True)
-    
-    # Save the figure if a path is provided
-    if saveTo is not None:
-        plt.savefig(saveTo)
-    plt.show()
+
     
 
 
@@ -107,8 +89,26 @@ class DiscreteSignal:
             self.signal = self.signal*scaler
             return self
 
-        
-
+       def plot(self,saveTo=None):
+    
+         y_min, y_max = np.min(self.signal), np.max(self.signal)
+         y_range = (y_min, y_max + 1)  
+    
+         plt.figure(figsize=(6, 6))
+         plt.xticks(np.arange(-self.INF, self.INF + 1, 1))
+    
+    
+         plt.ylim(*y_range)
+    
+    # Plot the signal using stem
+         plt.stem(np.arange(-self.INF, self.INF + 1, 1), self.signal)
+         plt.grid(True)
+    
+    
+         if saveTo is not None:
+           plt.savefig(saveTo)
+           plt.show()
+ 
 
 class  LTI_Discrete:
      
@@ -146,7 +146,7 @@ class  LTI_Discrete:
         
           
          sub_plots(unit_impulses,input_signal.INF,saveTo=f'./linearCombinationDiscrete.png')
-         plot(sum,input_signal.INF,saveTo=f'./linearCombinationSubplotsDiscrete.png')  
+         sum.plot(saveTo=f'./linearCombinationSubplotsDiscrete.png')  
 
          return co_efficients,unit_impulses
          
@@ -174,7 +174,7 @@ class  LTI_Discrete:
                sum.add(sub)     
           
           sub_plots(sub_signals,input_signal.INF,saveTo=f'./OutputSubplotsDiscrete.png') 
-          plot(sum,input_signal.INF,saveTo=f'./OutputDiscrete.png') 
+          sum.plot(saveTo=f'./OutputDiscrete.png') 
           
 
           return sum
