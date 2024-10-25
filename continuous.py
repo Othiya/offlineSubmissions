@@ -183,7 +183,7 @@ class LTI_Continous:
        for im in impulses[1:]:  # from the second impulse
             output = output.add(im)
 
-       #input_signal.plotTwo(output,saveTo=f'./VaryingDeltaContinuous.png')
+       input_signal.plotTwo(output,saveTo=f'./VaryingDeltaContinuous.png')
 
        return impulses, coefficients
 
@@ -219,7 +219,7 @@ class LTI_Continous:
            impulses.append(total_impulse)  # Store shifted impulse signal
            coefficients.append(coefficient)
 
-       #input_signal.subplots(impulses,3,saveTo=f'./outputSubplotsContinuous.png')
+       input_signal.subplots(impulses,3,saveTo=f'./outputSubplotsContinuous.png')
 
        output = impulses[0]
        for im in impulses[1:]:  # Start from the second impulse
@@ -229,7 +229,7 @@ class LTI_Continous:
        actual_output = ContinuousSignal(func4)  # Ensure func2 is defined
        actual_output.set_values(input_signal.x)
 
-       #actual_output.plotTwo(output,saveTo=f'./outputContinuous.png')
+       actual_output.plotTwo(output,saveTo=f'./outputContinuous.png')
 
 
     
