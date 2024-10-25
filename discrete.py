@@ -83,12 +83,14 @@ class DiscreteSignal:
            self.signal[time + self.INF] = value
 
        def shift_signal(self,shift):
-           #shifted = np.roll(self.signal,shift)
-           shifted = np.zeros_like(self.signal)
-           if shift>=0:
-                shifted[shift:]=self.signal[:-shift]
-           else:
-                shifted[:shift] = self.signal[-shift:]
+           shifted = np.roll(self.signal,shift)
+           #shifted = np.zeros_like(self.signal)
+           n = abs(shift)
+           if shift>0:
+                shifted[:n] = 0
+           elif shift <0:
+                shifted[-n:] = 0
+                
 
            return shifted
 
@@ -115,8 +117,7 @@ class  LTI_Discrete:
      
      def linear_combination_of_impulses(self,input_signal):
          
-         unit_impulse = DiscreteSignal(input_signal.INF)
-         unit_impulse.set_value_at_time(input_signal.INF,1)
+        
          #print(unit_impulse.signal)
          
          co_efficients =[]
@@ -124,12 +125,14 @@ class  LTI_Discrete:
          
 
          for i,val in enumerate(input_signal.signal):
-              co_efficients.append(val)
-              #print(val)
+              unit_impulse = DiscreteSignal(input_signal.INF)
+              unit_impulse.set_value_at_time(0,1)
+              
               k = i-input_signal.INF
               shifted = unit_impulse.shift_signal(k)
+              
               shifted *= val
-              #print(shifted)
+              co_efficients.append(val)
               unit_impulses.append(shifted)
 
          sum = np.zeros(len(input_signal.signal))
@@ -186,7 +189,6 @@ def main():
     
     sum = LTI_signal.output(input_signal)
 
-    print(sum)
 
 
 main()     
