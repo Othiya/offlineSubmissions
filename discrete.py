@@ -6,7 +6,7 @@ import math
 
 def plot(signal, INF, saveTo=None):
     # Define y_range based on the signal's minimum and maximum values
-    y_min, y_max = np.min(signal), np.max(signal)
+    y_min, y_max = np.min(signal.signal), np.max(signal.signal)
     y_range = (y_min, y_max + 1)  # Adjust as needed to ensure full visibility
     
     plt.figure(figsize=(6, 6))
@@ -16,7 +16,7 @@ def plot(signal, INF, saveTo=None):
     plt.ylim(*y_range)
     
     # Plot the signal using stem
-    plt.stem(np.arange(-INF, INF + 1, 1), signal)
+    plt.stem(np.arange(-INF, INF + 1, 1), signal.signal)
     plt.grid(True)
     
     # Save the figure if a path is provided
@@ -42,7 +42,7 @@ def sub_plots(impulses, INF, plots_per_row=3, saveTo=None):
     for i, impulse in enumerate(impulses):
         ax = axs[i]
         ax.set_xticks(np.arange(-INF, INF + 1, 1))
-        ax.stem(np.arange(-INF, INF + 1, 1), impulse, basefmt=" ")
+        ax.stem(np.arange(-INF, INF + 1, 1), impulse.signal, basefmt=" ")
         
         # Set labels, grid, and axis limits
         ax.set_xlabel("Time", fontsize=8)
@@ -90,21 +90,22 @@ class DiscreteSignal:
                 shifted[:n] = 0
            elif shift <0:
                 shifted[-n:] = 0
-                
 
-           return shifted
+           self.signal = shifted     
+                
+           return self
 
        def add(self,other):
-           summed_signal = self.signal + other
-           return summed_signal 
+           self.signal = self.signal + other.signal
+           return self 
 
        def multiply(self,other):
             multiplied_signal = self.signal*other
             return multiplied_signal
        
        def multiply_const_factor(self,scaler):
-            multiplied_signal = self.signal*scaler
-            return multiplied_signal
+            self.signal = self.signal*scaler
+            return self
 
         
 
@@ -131,17 +132,19 @@ class  LTI_Discrete:
               k = i-input_signal.INF
               shifted = unit_impulse.shift_signal(k)
               
-              shifted *= val
+              shifted_multiplied = shifted.multiply_const_factor(val)
               co_efficients.append(val)
-              unit_impulses.append(shifted)
+              unit_impulses.append(shifted_multiplied)
 
-         sum = np.zeros(len(input_signal.signal))
+        
+         sum = DiscreteSignal(input_signal.INF)
+         sum.set_values(np.zeros(len(input_signal.signal)))
           
 
          for sub in unit_impulses:
-               sum += sub    
+               sum.add(sub)    
         
-         #print(sum)   
+          
          sub_plots(unit_impulses,input_signal.INF,saveTo=f'./linearCombinationDiscrete.png')
          plot(sum,input_signal.INF,saveTo=f'./linearCombinationSubplotsDiscrete.png')  
 
@@ -151,23 +154,26 @@ class  LTI_Discrete:
 
      def output(self,input_signal):
           
-          subplots = []
+          sub_signals = []
           for i,val in enumerate(input_signal.signal):
-               copy = self.h
+               copy = DiscreteSignal(self.h.INF)
+               copy.set_values(self.h.signal)
+
                k = i-input_signal.INF
                shifted = copy.shift_signal(k)
-               #print(f"shifted :{shifted}")
-               subplot = (shifted)*val
-               #print(subplot)
-               subplots.append(subplot)
+               print(f"shifted :{shifted.signal}")
+               #sub = (shifted)*val
+               shifted_multiplied = shifted.multiply_const_factor(val)
+               sub_signals.append(shifted_multiplied)
 
-          sum = np.zeros(len(input_signal.signal))
+          sum = DiscreteSignal(input_signal.INF)
+          sum.set_values(np.zeros(len(input_signal.signal)))
           
 
-          for sub in subplots:
-               sum += sub    
+          for sub in sub_signals:
+               sum.add(sub)     
           
-          sub_plots(subplots,input_signal.INF,saveTo=f'./OutputSubplotsDiscrete.png') 
+          sub_plots(sub_signals,input_signal.INF,saveTo=f'./OutputSubplotsDiscrete.png') 
           plot(sum,input_signal.INF,saveTo=f'./OutputDiscrete.png') 
           
 
