@@ -8,4 +8,9 @@ public class Burger extends Food {
     public double calculatePrice() {
         return price;
     }
+
+    @Override
+    public String getName() {
+        return name;
+    }
 }

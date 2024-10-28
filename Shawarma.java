@@ -7,4 +7,9 @@ public class Shawarma extends Food {
     public double calculatePrice() {
         return price;
     }
+
+    @Override
+    public String getName() {
+        return name;
+    }
 }

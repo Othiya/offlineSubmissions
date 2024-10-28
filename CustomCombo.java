@@ -30,6 +30,12 @@ public class CustomCombo implements Combo {
         this.discount = dis;
     }
 
+    public void fullMenu() {
+        for (Combo combo : combos) {
+            System.out.println(combo.getName());
+        }
+    }
+
     @Override
     public double calculatePrice() {
         double sum = 0;
@@ -37,7 +43,16 @@ public class CustomCombo implements Combo {
             sum += combo.calculatePrice();
         }
 
+        for (Combo free : freeFood) {
+            sum -= free.calculatePrice();
+        }
+
         return sum - (sum * discount);
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
 }
