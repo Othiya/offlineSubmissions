@@ -17,9 +17,18 @@ public class Main {
         // // Closing the scanner
         // scanner.close();
 
+        // CustomCombo combo = new CustomCombo("Combo2 (Shawarma + Drink)");
+        // combo.addFood(new Shawarma());
+        // combo.addFood(new Drink());
+
+        Combo1 combo = new Combo1();
+        // combo.addFood(new Shawarma());
+        // combo.addFood(new Drink());
+
         CustomCombo c = new CustomCombo("first");
         c.addFood(new Burger());
         c.addFood(new Drink());
+        c.addFood(combo);
         c.fullMenu();
         System.err.println(c.calculatePrice());
     }
