@@ -13,4 +13,5 @@ public class Burger extends Food {
     public String getName() {
         return name;
     }
+
 }

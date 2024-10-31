@@ -12,4 +12,5 @@ public class Wedges extends Food {
     public String getName() {
         return name;
     }
+
 }

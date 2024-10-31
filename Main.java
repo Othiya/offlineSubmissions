@@ -27,9 +27,14 @@ public class Main {
 
         CustomCombo c = new CustomCombo("first");
         c.addFood(new Burger());
-        c.addFood(new Drink());
+        c.addFood(new Shawarma());
         c.addFood(combo);
+        Combo c2 = new FreeCombo(new Drink());
+        c.addFood(c2);
         c.fullMenu();
-        System.err.println(c.calculatePrice());
+        Combo cFinal = new DiscountCombo(c, 0.10);
+        // cFinal.setDiscount(5);
+
+        System.err.println(cFinal.calculatePrice());
     }
 }

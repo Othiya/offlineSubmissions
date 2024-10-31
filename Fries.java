@@ -17,4 +17,5 @@ public class Fries extends Food {
     public String getName() {
         return name;
     }
+
 }
