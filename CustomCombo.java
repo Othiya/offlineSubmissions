@@ -3,14 +3,14 @@ import java.util.ArrayList;
 public class CustomCombo implements Combo {
     String name;
     ArrayList<Combo> combos;
-    ArrayList<Combo> freeFood;
-    double discount;
+    // ArrayList<Combo> freeFood;
+    // double discount;
 
     public CustomCombo(String name) {
         this.name = name;
         combos = new ArrayList<>();
-        freeFood = new ArrayList<>();
-        discount = 0;
+        // freeFood = new ArrayList<>();
+        // discount = 0;
 
     }
 
@@ -22,13 +22,13 @@ public class CustomCombo implements Combo {
         combos.remove(combo);
     }
 
-    public void freeFood(Combo combo) {
-        freeFood.add(combo);
-    }
+    // public void freeFood(Combo combo) {
+    // freeFood.add(combo);
+    // }
 
-    public void getDiscount(double dis) {
-        this.discount = dis;
-    }
+    // public void getDiscount(double dis) {
+    // this.discount = dis;
+    // }
 
     public void fullMenu() {
         for (Combo combo : combos) {
@@ -43,11 +43,7 @@ public class CustomCombo implements Combo {
             sum += combo.calculatePrice();
         }
 
-        for (Combo free : freeFood) {
-            sum -= free.calculatePrice();
-        }
-
-        return sum - (sum * discount);
+        return sum;
     }
 
     @Override

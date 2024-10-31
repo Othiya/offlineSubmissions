@@ -17,13 +17,7 @@ public class Main {
         // // Closing the scanner
         // scanner.close();
 
-        // CustomCombo combo = new CustomCombo("Combo2 (Shawarma + Drink)");
-        // combo.addFood(new Shawarma());
-        // combo.addFood(new Drink());
-
         Combo1 combo = new Combo1();
-        // combo.addFood(new Shawarma());
-        // combo.addFood(new Drink());
 
         CustomCombo c = new CustomCombo("first");
         c.addFood(new Burger());
@@ -33,7 +27,6 @@ public class Main {
         c.addFood(c2);
         c.fullMenu();
         Combo cFinal = new DiscountCombo(c, 0.10);
-        // cFinal.setDiscount(5);
 
         System.err.println(cFinal.calculatePrice());
     }
