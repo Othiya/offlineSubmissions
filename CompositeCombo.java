@@ -31,6 +31,7 @@ public class CompositeCombo implements Combo {
     // }
 
     public void fullMenu() {
+        System.out.println(name);
         for (Combo combo : combos) {
             System.out.println(combo.getName());
         }
