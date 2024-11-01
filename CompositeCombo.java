@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
-public class CustomCombo implements Combo {
+public class CompositeCombo implements Combo {
     String name;
     ArrayList<Combo> combos;
     // ArrayList<Combo> freeFood;
     // double discount;
 
-    public CustomCombo(String name) {
+    public CompositeCombo(String name) {
         this.name = name;
         combos = new ArrayList<>();
         // freeFood = new ArrayList<>();

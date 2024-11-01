@@ -19,7 +19,7 @@ public class Main {
 
         Combo1 combo = new Combo1();
 
-        CustomCombo c = new CustomCombo("first");
+        CompositeCombo c = new CompositeCombo("first");
         c.addFood(new Burger());
         c.addFood(new Shawarma());
         c.addFood(combo);

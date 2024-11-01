@@ -1,8 +1,8 @@
 public class Combo1 implements Combo {
-    CustomCombo combo;
+    CompositeCombo combo;
 
     Combo1() {
-        combo = new CustomCombo("Combo1 (Burger + Fries + Drink)");
+        combo = new CompositeCombo("Combo1 (Burger + Fries + Drink)");
         combo.addFood(new Burger());
         combo.addFood(new Fries());
         combo.addFood(new Drink());
