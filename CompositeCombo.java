@@ -52,10 +52,6 @@ public class CompositeCombo implements Combo {
 
         }
 
-        for (Combo combo : freeFood) {
-            sum += combo.calculatePrice();
-        }
-
         return sum;
     }
 
