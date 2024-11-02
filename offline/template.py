@@ -14,9 +14,8 @@ class FourierSeries:
         self.func = func
         self.L = L
         self.terms = terms
+        self.x = np.linspace(-self.L,self.L,1000)
         
-    def set_x(self,N):
-        self.x = np.linspace(-self.L,self.L,N)
 
     def calculate_a0(self, N=1000):
         """
@@ -90,14 +89,14 @@ class FourierSeries:
         # Initialize the series with the a0 term
         
         # Compute each harmonic up to the specified number of terms
-
+        a0 = self.calculate_a0(1000)
         total_an = 0
         total_bn = 0
         for i in range(1,self.terms+1):
-           total_an +=  self.calculate_an(i,1000)
-           total_bn +=  self.calculate_bn(i,1000)
+           total_an +=  self.calculate_an(i,1000)*np.cos((i*np.pi*self.x)/self.L)
+           total_bn +=  self.calculate_bn(i,1000)*np.sin((i*np.pi*self.x)/self.L)
 
-        approx = (self.calculate_a0(1000)/2) + total_an + total_bn
+        approx = a0 + total_an + total_bn
         return approx
 
 
@@ -182,7 +181,6 @@ if __name__ == "__main__":
         # Define the target function dynamically
         fourier_series = FourierSeries(lambda x: target_function(x, function_type=function_type), L, terms)
 
-        fourier_series.set_x(1000)
         
         # Plot the Fourier series approximation
         fourier_series.plot()
