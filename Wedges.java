@@ -1,16 +1,13 @@
-public class Wedges extends Food {
-    public Wedges() {
-        super("Wedges", 150);
-    }
+public class Wedges implements Combo {
 
     @Override
     public double calculatePrice() {
-        return price;
+        return 150;
     }
 
     @Override
     public String getName() {
-        return name;
+        return "Wedges";
     }
 
 }

@@ -11,7 +11,7 @@ public class Combo1 implements Combo {
 
     @Override
     public double calculatePrice() {
-        return combo.calculatePrice();
+        return 400;
     }
 
     @Override

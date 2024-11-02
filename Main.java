@@ -2,35 +2,20 @@ import java.util.Scanner;
 
 public class Main {
     // public static void main(String[] args) {
-    // Scanner scanner = new Scanner(System.in);
 
-    // // // Asking for user input
-    // // System.out.print("Enter your name: ");
-    // // String name = scanner.nextLine();
-
-    // // System.out.print("Enter your age: ");
-    // // int age = scanner.nextInt();
-
-    // // // Displaying the input back to the user
-    // // System.out.println("Hello, " + name + "! You are " + age + " years old.");
-
-    // // // Closing the scanner
-    // // scanner.close();
-
-    // Combo2 combo = new Combo2();
-    // System.out.println(combo.calculatePrice());
+    // Combo1 combo1 = new Combo1();
+    // // System.out.println(combo1.calculatePrice());
 
     // CompositeCombo c = new CompositeCombo("first");
     // c.addFood(new Burger());
+    // c.addFood(combo1);
     // c.addFood(new Combo2());
-    // // c.addFood(combo);
-    // Combo c2 = new FreeCombo(new Wedges());
-    // c.addFood(c2);
+    // c.removeFood(combo1);
+    // c.freeFood(new Wedges());
+    // c.getDiscount(0.05);
     // c.fullMenu();
     // System.out.println(c.calculatePrice());
-    // Combo cFinal = new DiscountCombo(c, 0.05);
 
-    // System.out.println(cFinal.calculatePrice());
     // }
 
     public static void main(String[] args) {
@@ -117,40 +102,38 @@ public class Main {
                 }
             } else if (action.equalsIgnoreCase("Free")) {
                 if (food.equalsIgnoreCase("Burger")) {
-                    Combo free_food = new FreeCombo(burger);
-                    c.addFood(free_food);
+                    c.freeFood(burger);
                 } else if (food.equalsIgnoreCase("Fries")) {
-                    Combo free_food = new FreeCombo(fries);
-                    c.addFood(free_food);
+                    c.freeFood(fries);
+
                 } else if (food.equalsIgnoreCase("Wedges")) {
-                    Combo free_food = new FreeCombo(wedges);
-                    c.addFood(free_food);
+                    c.freeFood(wedges);
+
                 } else if (food.equalsIgnoreCase("Shawarma")) {
-                    Combo free_food = new FreeCombo(shawarma);
-                    c.addFood(free_food);
+                    c.freeFood(shawarma);
+
                 } else if (food.equalsIgnoreCase("Drink")) {
-                    Combo free_food = new FreeCombo(drink);
-                    c.addFood(free_food);
+                    c.freeFood(drink);
+
                 } else if (food.equalsIgnoreCase("Combo1")) {
-                    Combo free_food = new FreeCombo(combo1);
-                    c.addFood(free_food);
+                    c.freeFood(combo1);
+
                 } else if (food.equalsIgnoreCase("Combo2")) {
-                    Combo free_food = new FreeCombo(combo2);
-                    c.addFood(free_food);
+                    c.freeFood(combo2);
+
                 }
             } else if (action.equalsIgnoreCase("Discount")) {
 
                 double discount = Double.parseDouble(parts[1]);
 
-                Combo combo_after_discount = new DiscountCombo(c, discount / 100);
+                c.getDiscount(discount / 100);
                 String done = scanner.nextLine();
                 if (done.equalsIgnoreCase("Done")) {
                     c.fullMenu();
-                    System.err.println(combo_after_discount.calculatePrice());
+                    System.out.println("Discount-" + discount + "%");
+                    System.out.println(c.calculatePrice());
                     break;
                 }
-
-                // System.err.println(cFinal.calculatePrice());
 
             } else {
                 System.out.println("Invalid command.");

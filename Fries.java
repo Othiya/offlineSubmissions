@@ -1,21 +1,13 @@
-public class Fries extends Food {
-    public Fries() {
-        super("Fries", 100);
-    }
-
-    // @Override
-    // public void setFree() {
-    // price = 0;
-    // }
+public class Fries implements Combo {
 
     @Override
     public double calculatePrice() {
-        return price;
+        return 100;
     }
 
     @Override
     public String getName() {
-        return name;
+        return "Fries";
     }
 
 }

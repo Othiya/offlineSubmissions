@@ -1,16 +1,13 @@
-public class Shawarma extends Food {
-    public Shawarma() {
-        super("Shawarma", 200);
-    }
+public class Shawarma implements Combo {
 
     @Override
     public double calculatePrice() {
-        return price;
+        return 200;
     }
 
     @Override
     public String getName() {
-        return name;
+        return "Shawarma";
     }
 
 }

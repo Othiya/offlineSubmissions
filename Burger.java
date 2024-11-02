@@ -1,17 +1,13 @@
-public class Burger extends Food {
-
-    public Burger() {
-        super("Burger", 300);
-    }
+public class Burger implements Combo {
 
     @Override
     public double calculatePrice() {
-        return price;
+        return 300;
     }
 
     @Override
     public String getName() {
-        return name;
+        return "Burger";
     }
 
 }
