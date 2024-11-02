@@ -1,4 +1,4 @@
-public class Wedges implements Combo {
+public class Wedges implements Food {
 
     @Override
     public double calculatePrice() {

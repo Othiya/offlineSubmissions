@@ -1,4 +1,4 @@
-public interface Combo {
+public interface Food {
     double calculatePrice();
 
     String getName();

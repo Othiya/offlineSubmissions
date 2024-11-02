@@ -1,4 +1,4 @@
-public class Shawarma implements Combo {
+public class Shawarma implements Food {
 
     @Override
     public double calculatePrice() {

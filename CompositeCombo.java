@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class CompositeCombo implements Combo {
+public class CompositeCombo implements Food {
     String name;
-    ArrayList<Combo> combos;
-    ArrayList<Combo> freeFood;
+    ArrayList<Food> combos;
+    ArrayList<Food> freeFood;
     double discount;
 
     public CompositeCombo(String name) {
@@ -14,16 +14,16 @@ public class CompositeCombo implements Combo {
 
     }
 
-    public void addFood(Combo combo) {
+    public void addFood(Food combo) {
         // System.out.println(String.format("%s Added", combo.getName()));
         combos.add(combo);
     }
 
-    public void removeFood(Combo combo) {
+    public void removeFood(Food combo) {
         combos.remove(combo);
     }
 
-    public void freeFood(Combo combo) {
+    public void freeFood(Food combo) {
         freeFood.add(combo);
     }
 
@@ -34,10 +34,10 @@ public class CompositeCombo implements Combo {
     public void fullMenu() {
         System.out.print("Your Combo:");
         System.out.println(name);
-        for (Combo combo : combos) {
+        for (Food combo : combos) {
             System.out.println(combo.getName());
         }
-        for (Combo combo : freeFood) {
+        for (Food combo : freeFood) {
             System.out.println(String.format("%s (Free!!!)", combo.getName()));
 
         }
@@ -47,7 +47,7 @@ public class CompositeCombo implements Combo {
 
     public double calculatePriceWithoutDiscount() {
         double sum = 0;
-        for (Combo combo : combos) {
+        for (Food combo : combos) {
             sum += combo.calculatePrice();
 
         }
@@ -58,7 +58,7 @@ public class CompositeCombo implements Combo {
     @Override
     public double calculatePrice() {
         double sum = 0;
-        for (Combo combo : combos) {
+        for (Food combo : combos) {
             sum += combo.calculatePrice();
 
         }

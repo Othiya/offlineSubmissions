@@ -1,4 +1,4 @@
-public class Drink implements Combo {
+public class Drink implements Food {
 
     @Override
     public double calculatePrice() {

@@ -1,4 +1,4 @@
-public class Combo1 implements Combo {
+public class Combo1 implements Food {
     CompositeCombo combo;
 
     Combo1() {

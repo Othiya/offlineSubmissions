@@ -1,4 +1,4 @@
-public class Burger implements Combo {
+public class Burger implements Food {
 
     @Override
     public double calculatePrice() {

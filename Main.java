@@ -38,7 +38,7 @@ public class Main {
                 System.out.println("Shawarma - 200tk ");
                 System.out.println("Drink - 25tk ");
                 System.out.println("Combo1 (Burger + Fries + Drink) - 400tk ");
-                System.out.println("Combo2 (Shawarma + Drink) - 225tk ");
+                System.out.println("Combo2 (Shawarma + Drink) - 215tk ");
             } else {
                 System.out.println("Invalid choice. Please try again.");
             }
