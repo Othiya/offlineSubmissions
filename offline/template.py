@@ -143,18 +143,20 @@ def target_function(x, function_type="square"):
     """
     if function_type == "square":
         # Square wave: +1 when sin(x) >= 0, -1 otherwise
+        # if np.sin(x)>=0:
+        #     return 1
 
         return np.sign(np.sin(x))
     
     elif function_type == "sawtooth":
         # Sawtooth wave: linearly increasing from -1 to 1 over the period
-
-        return  (2 / np.pi) * (x + np.pi) % (2 * np.pi) - 1
+        p = 2*np.pi
+        return  2 * (x / p - np.floor(1/2 + x/p))  
     
     elif function_type == "triangle":
         # Triangle wave: periodic line with slope +1 and -1 alternately
-
-        return (2 / np.pi) * np.arcsin(np.sin(x))
+        p = 2*np.pi
+        return 2 * np.abs(2 * (x / p - np.floor(x / p + 0.5))) - 1  
     
     elif function_type == "sine":
         # Pure sine wave
