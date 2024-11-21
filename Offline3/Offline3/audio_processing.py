@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 
 ############################################################# audio file path was buzzjc.wav
 # Step 1: Load the audio file
-sample_rate, data = wavfile.read('D:/2-2 offlines/Offline3/Offline3/buzzjc.wav') 
+sample_rate, data = wavfile.read('D:/2-2 offlines/Offline3/Offline3/buzzjc.wav')
+#sample_rate, data = wavfile.read('D:/2-2 offlines/Offline3/Offline3/denoised_audio_original.wav') 
 data = data / np.max(np.abs(data))  # Normalize to -1 to 1
 
 # If stereo, convert to mono by averaging channels
