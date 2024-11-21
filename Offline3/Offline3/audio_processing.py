@@ -2,8 +2,11 @@ import numpy as np
 import scipy.io.wavfile as wavfile
 import matplotlib.pyplot as plt
 
+
+
+############################################################# audio file path was buzzjc.wav
 # Step 1: Load the audio file
-sample_rate, data = wavfile.read('buzzjc.wav')
+sample_rate, data = wavfile.read('D:/2-2 offlines/Offline3/Offline3/buzzjc.wav') 
 data = data / np.max(np.abs(data))  # Normalize to -1 to 1
 
 # If stereo, convert to mono by averaging channels
@@ -32,7 +35,20 @@ frequencies = np.linspace(0, max_freq, num=num_freqs)
 
 # Step 2: Apply Fourier Transform using trapezoidal integration
 def fourier_transform(signal, frequencies, sampled_times):
-    # use your code here from the first task
+    num_freqs = len(frequencies)
+    ft_result_real = np.zeros(num_freqs)
+    ft_result_imag = np.zeros(num_freqs)
+    
+    # Store the fourier transform results for each frequency. Handle the real and imaginary parts separately
+    # use trapezoidal integration to calculate the real and imaginary parts of the FT
+
+    for n,freq in enumerate(frequencies):
+        real = np.trapz(signal*np.cos(2*np.pi*freq*sampled_times),sampled_times)
+        imaginary = np.trapz(signal*np.sin(2*np.pi*freq*sampled_times),sampled_times)
+        ft_result_real[n] = real
+        ft_result_imag[n] = imaginary
+
+    return ft_result_real, ft_result_imag
     
 
 # Apply FT with trapezoidal integration
@@ -45,6 +61,18 @@ plt.title("Frequency Spectrum of the Audio Signal (Custom FT with Trapezoidal In
 plt.xlabel("Frequency (Hz)")
 plt.ylabel("Magnitude")
 plt.show()
+
+
+for n,freq in enumerate(frequencies):
+    ft_real = ft_data[0]
+    ft_imag = ft_data[1]
+
+    if freq < 1000:
+        #print(freq)
+        ft_real[n]=0
+        ft_imag[n]=0
+    
+
 
 # Step 3: Filter out unwanted noise frequencies
 filtered_ft_data= np.zeros((2, num_freqs))
@@ -66,6 +94,16 @@ plt.show()
 # Step 4: Apply Inverse Fourier Transform using trapezoidal integration
 def inverse_fourier_transform(ft_signal, frequencies, sampled_times):
     # use your code here from the first task
+    n = len(sampled_times)
+    reconstructed_signal = np.zeros(n)
+    # Reconstruct the signal by summing over all frequencies for each time in sampled_times.
+    # use trapezoidal integration to calculate the real part
+    # You have to return only the real part of the reconstructed signal
+    for n,time in enumerate(sampled_times):
+        real = np.trapz(ft_signal[0]*np.cos(2*np.pi*time*frequencies),frequencies)
+        reconstructed_signal[n] = real
+    
+    return reconstructed_signal
 
 # Step 4.1: Reconstruct the signal using IFT
 filtered_data = inverse_fourier_transform(filtered_ft_data, frequencies, sampled_times)

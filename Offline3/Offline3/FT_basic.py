@@ -45,7 +45,7 @@ plt.show()
 
 # Define the sampled times and frequencies
 sampled_times = x_values
-frequencies = np.linspace(-5,5,1000)
+frequencies = np.linspace(-1,1,1000)
 
 # Fourier Transform 
 def fourier_transform(signal, frequencies, sampled_times):
