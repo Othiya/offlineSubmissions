@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class main {
+public class DesiFlix {
     public static void main(String[] args) {
 
         Genre comedy = new Genre("Comedy");
@@ -22,6 +22,50 @@ public class main {
         thriller.upload("Inception");
 
         Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("1. User");
+            System.out.println("2. Movie Uploader");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    userMenu(comedy, thriller, horror);
+                    break;
+                case 2:
+                    uploaderMenu(comedy, thriller, horror);
+                    break;
+                case 3:
+                    // Exit the program
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    // Shut down the executors after the loop ends
+                    try {
+                        Thread.sleep(2000); // Wait to allow all notifications to complete
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Shut down the executors
+                    comedy.shutdown();
+                    horror.shutdown();
+                    thriller.shutdown();
+                    return;
+                default:
+                    System.out.println("Invalid choice! Try again.");
+
+            }
+
+        }
+
+    }
+
+    private static void userMenu(Genre comedy, Genre thriller, Genre horror) {
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
 
@@ -30,9 +74,9 @@ public class main {
         while (true) {
             System.out.println("1. Subscribe to a genre");
             System.out.println("2. Unsubscribe from a genre");
-            System.out.println("3. Upload a movie");
-            System.out.println("4. Exit");
+            System.out.println("3. Back to main menu");
             System.out.print("Enter your choice: ");
+
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -64,8 +108,31 @@ public class main {
                     break;
 
                 case 3:
+
+                    return;
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+        }
+
+    }
+
+    private static void uploaderMenu(Genre comedy, Genre thriller, Genre horror) {
+
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("1. Upload Movie");
+            System.out.println("2. Back to main menu");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+
                     // Upload a movie and notify users
-                    System.out.print("Enter the genre of the movie (Thriller, Horror, Comedy): ");
+                    System.out.print("Enter the genre of the movie (Thriller, Horror, Comedy):");
                     String genre = scanner.nextLine();
                     System.out.print("Enter the name of the movie: ");
                     String movie = scanner.nextLine();
@@ -77,27 +144,16 @@ public class main {
                     } else {
                         horror.upload(movie);
                     }
+
                     break;
 
-                case 4:
-                    // Exit the program
-                    System.out.println("Exiting...");
-                    scanner.close();
-                    // Shut down the executors after the loop ends
-                    try {
-                        Thread.sleep(2000); // Wait to allow all notifications to complete
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    // Shut down the executors
-                    comedy.shutdown();
-                    horror.shutdown();
-                    thriller.shutdown();
+                case 2:
                     return;
+
                 default:
                     System.out.println("Invalid choice! Try again.");
             }
         }
+
     }
 }

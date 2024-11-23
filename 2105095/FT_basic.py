@@ -24,7 +24,10 @@ def triangle(x):
     return y
 
 def sawtooth(x):
-    return np.where((-2 <= x) & (x <= 2), x, 0)
+    return np.where((-2 <= x) & (x <= 2), x+2, 0)
+    
+    # p = 2
+    # return np.where((-2 <= x) & (x <= 2), (2 / p) * (x + p) % (2 * p) - 1, 0)
     
 
 
@@ -46,7 +49,7 @@ plt.show()
 # Define the sampled times and frequencies
 sampled_times = x_values
 frequencies = np.linspace(-2,2,1000)
-#frequencies = np.linspace(-2,2,1000)
+#frequencies = np.linspace(-1,1,1000)
 #frequencies = np.linspace(-5,5,1000)
 
 # Fourier Transform 
@@ -86,8 +89,9 @@ def inverse_fourier_transform(ft_signal, frequencies, sampled_times):
     # use trapezoidal integration to calculate the real part
     # You have to return only the real part of the reconstructed signal
     for n,time in enumerate(sampled_times):
-        real = np.trapz(ft_signal[0]*np.cos(2*np.pi*time*frequencies),frequencies)
-        reconstructed_signal[n] = real
+        # real = np.trapz(ft_signal[0]*np.cos(2*np.pi*time*frequencies),frequencies)
+        # reconstructed_signal[n] = real
+        reconstructed_signal[n] = np.trapz(ft_signal[0] * np.cos(2 * np.pi * frequencies * time) + ft_signal[1] * np.sin(2 * np.pi * frequencies * time), frequencies)
     
     return reconstructed_signal
 

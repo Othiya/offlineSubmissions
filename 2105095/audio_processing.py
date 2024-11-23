@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 ############################################################# audio file path was buzzjc.wav
 # Step 1: Load the audio file
-sample_rate, data = wavfile.read('D:/2-2 offlines/Offline3/Offline3/buzzjc.wav')
+sample_rate, data = wavfile.read('D:/2-2 offlines/2105095/buzzjc.wav')
 #sample_rate, data = wavfile.read('D:/2-2 offlines/Offline3/Offline3/denoised_audio_original.wav') 
 data = data / np.max(np.abs(data))  # Normalize to -1 to 1
 
@@ -101,8 +101,8 @@ def inverse_fourier_transform(ft_signal, frequencies, sampled_times):
     # use trapezoidal integration to calculate the real part
     # You have to return only the real part of the reconstructed signal
     for n,time in enumerate(sampled_times):
-        real = np.trapz(ft_signal[0]*np.cos(2*np.pi*time*frequencies),frequencies)
-        reconstructed_signal[n] = real
+        
+        reconstructed_signal[n] = np.trapz(ft_signal[0] *np.cos(2 * np.pi * frequencies * time) + ft_signal[1] * np.sin(2 * np.pi * frequencies * time), frequencies)
     
     return reconstructed_signal
 
