@@ -5,16 +5,49 @@ samples = np.arange(n)
 sampling_rate=100
 wave_velocity=8000
 
-# Plot function to display signals
-def plot(x_values, y_values, title="Signal", xlabel="x", ylabel="y"):
-    plt.figure(figsize=(12, 4))
-    plt.plot(x_values, y_values, label="Signal")
+# # Plot function to display signals with step plot
+# def plot(x_values, y_values, title="Signal", xlabel="x", ylabel="y"):
+#     plt.figure(figsize=(12, 4))
+#     plt.step(x_values, y_values, where='mid', label="Signal")  # Using step plot for discrete points
+#     plt.title(title)
+#     plt.xlabel(xlabel)
+#     plt.ylabel(ylabel)
+#     plt.legend()
+#     plt.grid(True)
+#     plt.show()
+
+
+def plot(
+        samples, 
+        y_values, 
+        title=None,
+        x_label='n (Time Index)',
+        y_label='x[n]',
+    ):
+    plt.figure(figsize=(12, 12))
+    
+    # Set x-ticks to be the same as the sample points (discrete)
+    plt.xticks(samples)
+     
+    y_range = (np.min(y_values)-1,np.max(y_values)+1)
+    #y_range=(-2,2) 
+    # Adjust y-range dynamically based on the actual signal values in samples
+    #y_range = (y_range[0], max(np.max(samples), y_range[1]) + 1)
+    
+    # Set y-axis limits
+    plt.ylim(*y_range)
+    
+    # Create stem plot: x values are the sample points, and y values are the signal values
+    plt.stem(samples, y_values, basefmt=" ")
+    
+    # Set the plot title, labels, and grid
     plt.title(title)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
-    plt.legend()
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
     plt.grid(True)
+    
     plt.show()
+
 
 
 
@@ -63,7 +96,8 @@ def DFT(signal):
         for n in range(total_samples):
             term = signal[n]*np.exp(-2j*np.pi*k*n / total_samples)
             dft[k] += term
-        
+
+       
     return dft
 
 
@@ -84,22 +118,56 @@ def crossRelation(signal_A,signal_B):
     dftA = DFT(signal_A)
     dftB = DFT(signal_B)
 
-    freq = dftA*np.conj(dftB)
+    #freq = dftA*np.conj(dftB)
+    freq = dftB*np.conj(dftA)
     time = IDFT(freq)
-
+    
     return time
 
 
- 
+def getSampleLag(time_domain):
+
+    max_index = np.argmax(np.abs(time_domain))
+    N= len(time_domain)
+    
+    if max_index > N // 2:
+        max_index = max_index - N
+    
+    return max_index
+
+def distanceEstimation(signal_A, signal_B):
+    time_domain = crossRelation(signal_A, signal_B)
+    sample_lag = getSampleLag(time_domain)
+    print(f"Sample Lag: {sample_lag}")
+    
+    # Calculate distance
+    distance = abs(sample_lag) * (1 / sampling_rate) * wave_velocity
+    return distance
+
+
+# def distanceEstimation(signal_A,signal_B):
+#     time = crossRelation(signal_A,signal_B)
+#     sample_lag = np.max(np.abs(time))
+#     print("SAMPLE LAG")
+#     print(sample_lag)
+#     distance = sample_lag * (1/sampling_rate) * wave_velocity
+
+#     return distance
 
 
 # Generate signals and plot them
 signal_A, signal_B = generate_signals()
 
  # Plot both signals
-plot(samples, signal_A, title="Signal A (Original + Noise)")
-plot(samples,(IDFT(DFT(signal_A))),"f","a")
-plot(samples, signal_B, title="Signal B (Shifted)")
-plot(samples,IDFT(DFT(signal_B)),"f","a")
+#plot(samples, signal_A, title="Signal A (Original + Noise)")
+#plot(samples,np.abs(DFT(signal_A)),"f","a")
+#plot(samples,(IDFT(DFT(signal_A))),"f","a")
+#plot(samples, signal_B, title="Signal B (Shifted)")
+#plot(samples,np.abs(DFT(signal_B)),"f","b")
+#plot(samples,IDFT(DFT(signal_B)),"f","a")
 
-plot(samples,crossRelation(signal_A,signal_B),"cross","relation")
+plot(samples,crossRelation(signal_A,signal_B),"cross-relation","lag")
+
+
+print("Estimated Distance")
+print(distanceEstimation(signal_A,signal_B))
