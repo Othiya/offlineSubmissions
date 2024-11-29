@@ -24,7 +24,7 @@ def plot(
         x_label='n (Time Index)',
         y_label='x[n]',
     ):
-    plt.figure(figsize=(12, 12))
+    plt.figure(figsize=(10, 10))
     
     # Set x-ticks to be the same as the sample points (discrete)
     plt.xticks(samples)
@@ -144,7 +144,49 @@ def distanceEstimation(signal_A, signal_B):
     distance = abs(sample_lag) * (1 / sampling_rate) * wave_velocity
     return distance
 
+# def apply_filter(signal):
+#     freq = np.abs(DFT(signal))
+    
+#     for i,f in enumerate(freq):
+#        if f <= 5:
+#            freq[i]=0
 
+#     plot(samples,freq,"f","a") 
+
+#     back = IDFT(freq)  
+#     plot(samples,back,"f","a")    
+
+
+def apply_filter(signal):
+
+    freq_signal = DFT(signal)
+       
+    abs_value = np.abs(freq_signal)
+
+    #plot(samples,magnitude,"f","a")
+    
+    
+    top_indices = np.argsort(abs_value)[-4:]  # Indices of top 4 frequencies
+    
+    
+    mask = np.zeros_like(freq_signal, dtype=bool)
+    mask[top_indices] = True
+    
+   
+    filtered_freq_signal = np.zeros_like(freq_signal, dtype=complex)
+    filtered_freq_signal[mask] = freq_signal[mask]
+
+    #plot(samples,np.abs(filtered_freq_signal),"f","a")
+    
+    # Perform the inverse DFT to get the filtered signal
+    filtered_signal = IDFT(filtered_freq_signal)
+
+    plot(samples,filtered_signal,"f","a")
+    
+    return filtered_signal    
+
+
+        
 # def distanceEstimation(signal_A,signal_B):
 #     time = crossRelation(signal_A,signal_B)
 #     sample_lag = np.max(np.abs(time))
@@ -155,19 +197,28 @@ def distanceEstimation(signal_A, signal_B):
 #     return distance
 
 
+
+
 # Generate signals and plot them
 signal_A, signal_B = generate_signals()
 
- # Plot both signals
-#plot(samples, signal_A, title="Signal A (Original + Noise)")
-#plot(samples,np.abs(DFT(signal_A)),"f","a")
+# plot(samples,signal_A,"signal A","f","amplitude")
+# plot(samples,np.abs(DFT(signal_A)),"signal A","f","amplitude")
+# plot(samples,signal_B,"f","amplitude")
+# plot(samples,np.abs(DFT(signal_B)),"signal B","f","amplitude")
+# plot(np.arange(-n//2,n//2),crossRelation(signal_A,signal_B),"DFT based cross relation","lag","co-relation")
+
+
 #plot(samples,(IDFT(DFT(signal_A))),"f","a")
-#plot(samples, signal_B, title="Signal B (Shifted)")
-#plot(samples,np.abs(DFT(signal_B)),"f","b")
 #plot(samples,IDFT(DFT(signal_B)),"f","a")
 
-plot(samples,crossRelation(signal_A,signal_B),"cross-relation","lag")
 
 
-print("Estimated Distance")
+print("Estimated Distance:")
 print(distanceEstimation(signal_A,signal_B))
+
+
+filtered_A = apply_filter(signal_A); 
+filtered_B = apply_filter(signal_B); 
+print("Estimated Distance after Filtering:")
+print(distanceEstimation(filtered_A,filtered_B))

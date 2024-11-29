@@ -160,25 +160,25 @@ for k, n in enumerate(n_samples):
         start_time_dft = time.time()
         result_dft = DFT(signal)
         end_time_dft = time.time()
-        total_time_dft += (end_time_dft - start_time_dft)*500
+        total_time_dft += (end_time_dft - start_time_dft)
 
         # FFT timing
         start_time_fft = time.time()
         result_fft = FFT(signal)
         end_time_fft = time.time()
-        total_time_fft += (end_time_fft - start_time_fft)*500
+        total_time_fft += (end_time_fft - start_time_fft)
 
         # IDFT timing
         start_time_idft = time.time()
         result_idft = IDFT(result_dft)
         end_time_idft = time.time()
-        total_time_idft += (end_time_idft - start_time_idft)*500
+        total_time_idft += (end_time_idft - start_time_idft)
 
         # IFFT timing
         start_time_ifft = time.time()
         result_ifft = IFFT(result_fft)
         end_time_ifft = time.time()
-        total_time_ifft += (end_time_ifft - start_time_ifft)*500
+        total_time_ifft += (end_time_ifft - start_time_ifft)
     
     # Store the average times
     dft_time[k] = total_time_dft / 10.0
@@ -189,5 +189,5 @@ for k, n in enumerate(n_samples):
 
 
 
-plot1(n_samples,dft_time,fft_time,"DFT","FFT","DFT/FFT vs IDFT/IFFT Execution Time Comparison")
-plot1(n_samples,idft_time,ifft_time,"IDFT","IFFT","IDFT/IFFT vs IDFT/IFFT Execution Time Comparison")
+plot1(n_samples,dft_time,fft_time,"DFT","FFT","DFT vs FFT Execution Time Comparison")
+plot1(n_samples,idft_time,ifft_time,"IDFT","IFFT","IDFT vs IFFT Execution Time Comparison")
