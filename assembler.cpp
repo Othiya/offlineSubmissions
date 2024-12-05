@@ -134,8 +134,8 @@ int32_t main()
     MAP_REG_ADD["$t2"] = "3";
     MAP_REG_ADD["$t3"] = "4";
     MAP_REG_ADD["$t4"] = "5";
-    MAP_REG_ADD["$t5"] = "6";
-    MAP_REG_ADD["$sp"] = "7";
+    //MAP_REG_ADD["$t5"] = "6";
+    MAP_REG_ADD["$sp"] = "6";
 
     map<string, string> MAP_INS_OPC;
     // BDFJMHEOIKPCGNAL
@@ -196,18 +196,10 @@ int32_t main()
             output = MAP_INS_OPC[ins] + MAP_REG_ADD[src_reg_1] + MAP_REG_ADD[src_reg_2] + MAP_REG_ADD[dest_reg] + sh_amt;
             //            DBG(output);
 
-            // if (ins == "addi" || ins == "subi" || ins == "andi" || ins == "ori")
-            // {
-            //     string add_imm = res[2];
-            //     string t = dec_to_hex_pad_trim(add_imm);
-
-            //     output = MAP_INS_OPC[ins] + MAP_REG_ADD[src_reg] + MAP_REG_ADD[dest_reg] + t;
-
             if (ins == "sll" || ins == "srl")
             {
-                string src_reg = res[1];
                 sh_amt = dec_to_hex(src_reg_2);
-                output = MAP_INS_OPC[ins] + MAP_REG_ADD[src_reg] + MAP_REG_ADD[dest_reg] + "0" + sh_amt;
+                output = MAP_INS_OPC[ins] + MAP_REG_ADD[src_reg_1] + "0" + MAP_REG_ADD[dest_reg] + sh_amt;
             }
 
             machine_code.push_back(output);
@@ -301,62 +293,62 @@ int32_t main()
 
             machine_code.push_back(output);
         }
-        // else if (ins == "push")
-        // {
-        //     string other;
-        //     cin >> other;
+        else if (ins == "push")
+        {
+            string other;
+            cin >> other;
 
-        //     string output = "";
+            string output = "";
 
-        //     if (other[0] == '$')
-        //     {
-        //         /**
-        //             push $t0
-        //          => sw $t0,0($sp)
-        //          => subi $sp,$sp,1
+            if (other[0] == '$')
+            {
+                /**
+                    push $t0
+                 => sw $t0,0($sp)
+                 => subi $sp,$sp,1
 
-        //         **/
+                **/
 
-        //         output = MAP_INS_OPC["sw"] + MAP_REG_ADD["$sp"] + MAP_REG_ADD[other] + "00";
-        //         machine_code.push_back(output);
+                output = MAP_INS_OPC["sw"] + MAP_REG_ADD["$sp"] + MAP_REG_ADD[other] + "00";
+                machine_code.push_back(output);
 
-        //         output = MAP_INS_OPC["subi"] + MAP_REG_ADD["$sp"] + MAP_REG_ADD["$sp"] + "01";
-        //         machine_code.push_back(output);
-        //     }
-        //     else
-        //     {
-        //         vector<string> temp = tokenize(other, '(');
-        //         string offset_d = temp[0];
-        //         string left = temp[1];
+                output = MAP_INS_OPC["subi"] + MAP_REG_ADD["$sp"] + MAP_REG_ADD["$sp"] + "01";
+                machine_code.push_back(output);
+            }
+            else
+            {
+                vector<string> temp = tokenize(other, '(');
+                string offset_d = temp[0];
+                string left = temp[1];
 
-        //         vector<string> temp2 = tokenize(left, ')');
-        //         other = temp2[0];
+                vector<string> temp2 = tokenize(left, ')');
+                other = temp2[0];
 
-        //         string t = dec_to_hex_pad_trim(offset_d);
+                string t = dec_to_hex_pad_trim(offset_d);
 
-        //         output = MAP_INS_OPC["lw"] + MAP_REG_ADD[other] + MAP_REG_ADD["$t5"] + t;
-        //         machine_code.push_back(output);
+                output = MAP_INS_OPC["lw"] + MAP_REG_ADD[other] + MAP_REG_ADD["$t5"] + t;
+                machine_code.push_back(output);
 
-        //         output = MAP_INS_OPC["sw"] + MAP_REG_ADD["$sp"] + MAP_REG_ADD["$t5"] + "00";
-        //         machine_code.push_back(output);
+                output = MAP_INS_OPC["sw"] + MAP_REG_ADD["$sp"] + MAP_REG_ADD["$t5"] + "00";
+                machine_code.push_back(output);
 
-        //         output = MAP_INS_OPC["subi"] + MAP_REG_ADD["$sp"] + MAP_REG_ADD["$sp"] + "01";
-        //         machine_code.push_back(output);
-        //     }
-        // }
-        // else if (ins == "pop")
-        // {
-        //     string reg;
-        //     cin >> reg;
+                output = MAP_INS_OPC["subi"] + MAP_REG_ADD["$sp"] + MAP_REG_ADD["$sp"] + "01";
+                machine_code.push_back(output);
+            }
+        }
+        else if (ins == "pop")
+        {
+            string reg;
+            cin >> reg;
 
-        //     string output = "";
+            string output = "";
 
-        //     output = MAP_INS_OPC["addi"] + MAP_REG_ADD["$sp"] + MAP_REG_ADD["$sp"] + "01";
-        //     machine_code.push_back(output);
+            output = MAP_INS_OPC["addi"] + MAP_REG_ADD["$sp"] + MAP_REG_ADD["$sp"] + "01";
+            machine_code.push_back(output);
 
-        //     output = MAP_INS_OPC["lw"] + MAP_REG_ADD["$sp"] + MAP_REG_ADD[reg] + "00";
-        //     machine_code.push_back(output);
-        // }
+            output = MAP_INS_OPC["lw"] + MAP_REG_ADD["$sp"] + MAP_REG_ADD[reg] + "00";
+            machine_code.push_back(output);
+        }
         else
         {
             /// label
